@@ -1,0 +1,6 @@
+users:
+    admin:
+        email: homelab@nebulea.dev
+        name: Admin
+        password: $2a$11$tG3vYpevjtS5XLbBrrbAk.ZtP06FORir./O0fnzDdtRu8N.gyq1hG
+        filter: ""

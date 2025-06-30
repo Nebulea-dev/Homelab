@@ -1,0 +1,3 @@
+[submodule "homelab/website"]
+	path = homelab/website
+	url = git@github.com:Nebulea-dev/Nebulea-Website.git

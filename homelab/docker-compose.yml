@@ -1,0 +1,31 @@
+name: homelab
+
+include:
+  - "dozzle/docker-compose.yml" # 8080
+  - "stirlingpdf/docker-compose.yml" # 8082
+  - "chibisafe/docker-compose.yml" # 8000
+  - "caddy/docker-compose.yml" # 80 & 443
+  - "website/docker-compose.yml" # 3000
+  - "immich/docker-compose.yml" # 2283
+  - "wireguard-client/docker-compose.yml"
+
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    environment:
+      - PUID=${ENV_PUID}
+      - PGID=${ENV_PGID}
+      - TZ={TIMEZONE}
+      - QBT_EULA=accept
+      - QBT_VERSION=latest
+      - QBT_WEBUI_PORT=8081
+    image: qbittorrentofficial/qbittorrent-nox:latest
+    network_mode: service:wireguard-client
+    restart: unless-stopped
+
+networks:
+  homelab-net:
+    name: homelab
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

@@ -1,0 +1,127 @@
+{
+  order authenticate before respond
+  order authorize before basicauth
+
+  security {
+    local identity store localdb {
+      realm local
+      path /data/CaddyUsers.json
+      user YourDefaultUser {
+        name DefaultUser
+        email default@user.com
+        password "bcrypt:12:$2a$12$oTMBhELGUQcZ0ZD64nPbheIpR1GHveixBalN8ZVYI/yLdhXMYv2ou" overwrite
+        roles authp/admin authp/user
+      }
+    }  
+
+    authentication portal myportal {
+      #value is in seconds. This value is 3 months
+      crypto default token lifetime 7884000
+      crypto key sign-verify {$JWT}
+      enable identity store localdb
+      #enable identity provider github
+      cookie domain nebulea.dev
+
+      # If you want session only (ie when browser closes they are gone), comment out the line below.
+      # Keep cookie around for 3 months
+      cookie lifetime 7884000
+
+      # find other icons at https://icons8.com/line-awesome
+      transform user {
+        match origin local
+        action add role authp/user
+        require mfa
+ 
+        ui link "My Identity" "/auth/whoami" icon "las la-id-badge"
+        ui link "My Profile" "/auth/profile/" icon "las la-user"
+      }
+    }
+
+    authorization policy users_policy {
+      #Allow basic and api key auth
+      with basic auth portal myportal realm local
+      with api key auth portal myportal realm local
+
+      #This url is set below. This is where Authcrunch will be
+      set auth url https://auth.nebulea.dev/
+      allow roles authp/admin authp/user
+      crypto key verify {$JWT}
+      acl rule {
+        comment allow users
+        match role authp/user
+        allow stop log info
+      }
+      acl rule {
+        comment default deny
+        match any
+        deny log warn
+      }
+    }
+  }
+}
+
+auth.nebulea.dev {
+  route {
+    authenticate with myportal
+  }
+}
+
+
+#authcrunch security end
+
+qbt.nebulea.dev {
+  reverse_proxy wireguard:8081
+}
+
+dozzle.nebulea.dev {
+  route {
+    authorize with users_policy
+    reverse_proxy dozzle:8080
+  }
+}
+
+jellyfin.nebulea.dev {
+  reverse_proxy jellyfin:8096
+}
+
+jellyseerr.nebulea.dev {
+  reverse_proxy jellyseerr:5055
+}
+
+nebulea.dev {
+  reverse_proxy website:3000
+}
+
+pdf.nebulea.dev {
+  reverse_proxy stirlingpdf:8082
+}
+
+safe.nebulea.dev {
+	route {
+		file_server * {
+				root /app/uploads
+				pass_thru
+		}
+
+		@api path /api/*
+		reverse_proxy @api http://chibisafe_server:8000 {
+				header_up Host {http.reverse_proxy.upstream.hostport}
+				header_up X-Real-IP {http.request.header.X-Real-IP}
+		}
+
+		@docs path /docs*
+		reverse_proxy @docs http://chibisafe_server:8000 {
+				header_up Host {http.reverse_proxy.upstream.hostport}
+				header_up X-Real-IP {http.request.header.X-Real-IP}
+		}
+
+		reverse_proxy http://chibisafe:8001 {
+				header_up Host {http.reverse_proxy.upstream.hostport}
+				header_up X-Real-IP {http.request.header.X-Real-IP}
+		}
+	}
+}
+
+immich.nebulea.dev {
+  reverse_proxy immich-server:2283
+}
