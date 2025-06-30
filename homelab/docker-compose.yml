@@ -7,7 +7,9 @@ include:
   - "caddy/docker-compose.yml" # 80 & 443
   - "website/docker-compose.yml" # 3000
   - "immich/docker-compose.yml" # 2283
-  - "wireguard-client/docker-compose.yml"
+  - "wireguard-client/docker-compose.yml" # 8081
+  - "metube/docker-compose.yml" # 8081
+  - "it-tools/docker-compose.yml" # 80
 
 services:
   qbittorrent:
@@ -18,7 +20,7 @@ services:
       - TZ={TIMEZONE}
       - QBT_EULA=accept
       - QBT_VERSION=latest
-      - QBT_WEBUI_PORT=8081
+      - QBT_WEBUI_PORT=8083
     image: qbittorrentofficial/qbittorrent-nox:latest
     network_mode: service:wireguard-client
     restart: unless-stopped

@@ -93,7 +93,10 @@ nebulea.dev {
 }
 
 pdf.nebulea.dev {
-  reverse_proxy stirlingpdf:8082
+  route {
+    authorize with users_policy
+    reverse_proxy stirlingpdf:8082
+  }
 }
 
 safe.nebulea.dev {
@@ -124,4 +127,18 @@ safe.nebulea.dev {
 
 immich.nebulea.dev {
   reverse_proxy immich-server:2283
+}
+
+metube.nebulea.dev {
+  route {
+    authorize with users_policy
+    reverse_proxy metube:8081
+  }
+}
+
+ittools.nebulea.dev {
+  route {
+    authorize with users_policy
+    reverse_proxy it-tools:80
+  }
 }
