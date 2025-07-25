@@ -1,0 +1,17 @@
+---
+main:
+  - name: Welcome
+    ref: "/Welcome"
+  - name: Introduction
+    sub:
+      - name: Getting Started
+        ref: "/Introduction/GettingStarted"
+      - name: Structure
+        ref: "/Introduction/Structure"
+  - name: Guides
+    ref: "/Guides"
+    sub:
+      - name: How to add a service
+        ref: "/Guides/AddService"
+      - name: Caddy implementation of service
+        ref: "/Guides/CaddyImplementation"

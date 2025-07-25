@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:1313/Welcome/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Introduction/Structure/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Introduction/GettingStarted/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Guides/AddService/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Guides/CaddyImplementation/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Guides/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Introduction/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+  </url>
+</urlset>

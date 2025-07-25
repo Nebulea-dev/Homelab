@@ -9,7 +9,7 @@
       user YourDefaultUser {
         name DefaultUser
         email default@user.com
-        password "bcrypt:12:$2a$12$oTMBhELGUQcZ0ZD64nPbheIpR1GHveixBalN8ZVYI/yLdhXMYv2ou" overwrite
+        password "bcrypt:12:$2a$12$nEa9SgUT.nMe6PVzaJfL0.Uw72lYOjJVk52aMlfK6cxo3YkUnpKy6" overwrite
         roles authp/admin authp/user
       }
     }  
@@ -140,5 +140,19 @@ ittools.nebulea.dev {
   route {
     authorize with users_policy
     reverse_proxy it-tools:80
+  }
+}
+
+home.nebulea.dev {
+  route {
+    authorize with users_policy
+    reverse_proxy flame:5005
+  }
+}
+
+docs.nebulea.dev {
+  route {
+    authorize with users_policy
+    reverse_proxy hugodocs:1313
   }
 }

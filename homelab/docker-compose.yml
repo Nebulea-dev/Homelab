@@ -10,6 +10,9 @@ include:
   - "wireguard-client/docker-compose.yml" # 8081
   - "metube/docker-compose.yml" # 8081
   - "it-tools/docker-compose.yml" # 80
+  - "flame/docker-compose.yml"
+  - "hugodocs/docker-compose.yml"
+
 
 services:
   qbittorrent:

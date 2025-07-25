@@ -2,9 +2,11 @@ services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    # extends:
-    #   file: hwaccel.transcoding.yml
-    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+    environment:
+      DB_HOSTNAME: ${DB_HOSTNAME}
+      DB_DATABASE_NAME: ${DB_NAME_IMMICH}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
@@ -13,7 +15,7 @@ services:
       - '2283:2283'
     depends_on:
       - redis
-      - database
+      - postgres
     restart: always
     healthcheck:
       disable: false
@@ -37,7 +39,7 @@ services:
       - homelab-net
 
   redis:
-    container_name: immich_redis
+    container_name: redis
     image: docker.io/valkey/valkey:8-bookworm@sha256:fec42f399876eb6faf9e008570597741c87ff7662a54185593e74b09ce83d177
     healthcheck:
       test: redis-cli ping || exit 1
@@ -45,13 +47,13 @@ services:
     networks:
       - homelab-net
 
-  database:
-    container_name: immich_postgres
+  postgres:
+    container_name: postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
+      DB_DATABASE_NAME: ${DB_NAME_IMMICH}
       POSTGRES_INITDB_ARGS: '--data-checksums'
       # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
       # DB_STORAGE_TYPE: 'HDD'

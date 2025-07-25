@@ -1,0 +1,13 @@
+services:
+  hugodocs:
+    container_name: hugodocs
+    image: ghcr.io/gohugoio/hugo:v0.148.1
+    command: server --buildDrafts --bind 0.0.0.0
+    user: "1000:100"
+    volumes:
+      - ./hugodocs:/project
+    ports:
+      - 1313:1313
+    restart: unless-stopped
+    networks:
+      - homelab-net
