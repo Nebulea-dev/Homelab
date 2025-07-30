@@ -1,0 +1,12 @@
+name: homelab
+
+include:
+  - "homelab-core/docker-compose.yml"
+  - "media-server/docker-compose.yml"
+
+networks:
+  homelab-net:
+    name: homelab
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

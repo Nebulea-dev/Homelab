@@ -1,0 +1,20 @@
+services:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    ports:
+      - "8082:8082"
+    container_name: stirlingpdf
+    volumes:
+      - ./trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - ./extraConfigs:/configs
+      - ./customFiles:/customFiles/
+      - ./logs:/logs/
+      - ./pipeline:/pipeline/
+    environment:
+      - SERVER_HOST="0.0.0.0"
+      - SERVER_PORT=8082
+      - DOCKER_ENABLE_SECURITY=false
+      - LANGS=en_GB
+    networks:
+      - homelab-net
+
