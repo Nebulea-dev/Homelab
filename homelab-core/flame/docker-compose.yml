@@ -2,6 +2,8 @@ services:
   flame:
     image: pawelmalak/flame:latest
     container_name: flame
+    ports:
+      - 5005:5005
     restart: unless-stopped
     volumes:
       - ./data/:/app/data
