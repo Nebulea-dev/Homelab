@@ -1,0 +1,18 @@
+services:
+  minecraft-2:
+    container_name: minecraft-2
+    image: itzg/minecraft-server:java21
+    ports:
+      - 25567:25565
+    user: "1000:100"
+    environment:
+      EULA: "TRUE"
+      TYPE: 'MODRINTH'
+      MODRINTH_MODPACK: '/mrpack/CreateAero_1.0.3.mrpack'
+      MEMORY: "8G"
+    volumes:
+      - ./data:/data
+      - ./mrpack:/mrpack
+    restart: unless-stopped
+    networks:
+      - homelab-net

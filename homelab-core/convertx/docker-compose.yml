@@ -1,0 +1,11 @@
+services:
+  convertx:
+    image: ghcr.io/c4illin/convertx:latest
+    container_name: convertx
+    environment:
+      - ALLOW_UNAUTHENTICATED=true
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - homelab-net

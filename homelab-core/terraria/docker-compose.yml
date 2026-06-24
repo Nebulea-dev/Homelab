@@ -1,0 +1,34 @@
+services:
+  terraria:
+    container_name: terraria
+    image: jacobsmile/tmodloader1.4:latest
+    entrypoint: >
+      /bin/sh -c "
+      apt-get update &&
+      apt-get install -y libicu-dev &&
+      /terraria-server/entrypoint.sh
+      "
+    environment:
+      TMOD_ENABLEDMODS: >
+        2669644269,
+        2908170107,
+        2563309347,
+        2824688266,
+        2824688072
+      TMOD_AUTODOWNLOAD: >-
+        2669644269,
+        2908170107,
+        2563309347,
+        2824688266,
+        2824688072
+      TMOD_PASS: neekotomato
+      TMOD_WORLDNAME: "The_brows_!!"
+      TMOD_MOTD: 'Neeko my beloved !!!!!!!!!!!!!!!'
+      TMOD_WORLDSEED: briartomato
+    volumes:
+      - ./data:/data
+    ports:
+      - 7777:7777
+    restart: unless-stopped
+    networks:
+      - homelab-net
