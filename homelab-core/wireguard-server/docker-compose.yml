@@ -1,0 +1,24 @@
+services:
+  wireguard-server:
+    image: linuxserver/wireguard
+    container_name: wireguard-server
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${ENV_PUID}
+      - PGID=${ENV_PGID}
+      - TZ=${TIMEZONE}
+      - SERVERURL=nebulea.dev
+      - PEERS=peer1,peer2 # Add your peer names here
+      - PEERDNS=10.2.0.1 # ProtonVPN DNS or your preferred DNS
+      - INTERNAL_SUBNET=10.2.0.2/32 # Internal subnet for the server
+    volumes:
+      - ./wg-server-config:/config
+      - /lib/modules:/lib/modules
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    network_mode: service:wireguard
+    depends_on:
+      - wireguard
+    restart: unless-stopped

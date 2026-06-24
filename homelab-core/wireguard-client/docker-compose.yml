@@ -1,0 +1,23 @@
+services:
+  wireguard-client:
+    image: linuxserver/wireguard
+    container_name: wireguard-client
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${ENV_PUID}
+      - PGID=${ENV_PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./wg-config:/config
+    ports:
+      - 6881:6881/tcp # qbittorrent : Torrent port TCP
+      - 6881:6881/udp # qbittorrent : Torrent port UDP
+      - 8081:8081 # qbittorrent : WebUI
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      - homelab-net
+
