@@ -5,10 +5,17 @@ include:
   - "stirlingpdf/docker-compose.yml" # 8082
   - "chibisafe/docker-compose.yml" # 8000
   - "caddy/docker-compose.yml" # 80 & 443
-  - "website/docker-compose.yml" # 3000
+  #- "website/docker-compose.yml" # 3000
   - "immich/docker-compose.yml" # 2283
-#  - "wireguard-client/docker-compose.yml" # 8081
+  #- "wireguard-client/docker-compose.yml" # 8081
   - "metube/docker-compose.yml" # 8081
   - "it-tools/docker-compose.yml" # 80
   - "flame/docker-compose.yml"
   - "hugodocs/docker-compose.yml"
+  - "convertx/docker-compose.yml"
+  #- "wireguard-server/docker-compose.yml"
+  - "terraria/docker-compose.yml"
+  - "minecraft/docker-compose.yml"
+  - "minecraft-2/docker-compose.yml"
+  - "cs2-server/docker-compose.yml"
+  - "wud/docker-compose.yml" #3001

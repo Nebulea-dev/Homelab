@@ -2,7 +2,7 @@ name: homelab
 
 include:
   - "homelab-core/docker-compose.yml"
-  - "media-server/docker-compose.yml"
+#  - "media-server/docker-compose.yml"
 
 networks:
   homelab-net:
