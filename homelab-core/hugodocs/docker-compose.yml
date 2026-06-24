@@ -1,10 +1,11 @@
 services:
   hugodocs:
     container_name: hugodocs
-    image: ghcr.io/gohugoio/hugo:v0.148.1
+    build: .
     command: server --buildDrafts --bind 0.0.0.0
     user: "1000:100"
     volumes:
+      - /project/themes
       - ./hugodocs:/project
     ports:
       - 1313:1313
